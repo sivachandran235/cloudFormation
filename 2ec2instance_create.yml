@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create 2 EC2 instances with Apache using existing Security Group dec2025
+
+Resources:
+
+  EC2Instance1:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-00e428798e77d38d9
+      InstanceType: t2.micro
+      KeyName: dec2025
+      SecurityGroupIds:
+        - sg-0abc123456789def0   # dec2025 Security Group ID
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          yum update -y
+          yum install httpd -y
+          systemctl start httpd
+          systemctl enable httpd
+          echo "<h1>Apache Server - Instance 1</h1>" > /var/www/html/index.html
+      Tags:
+        - Key: Name
+          Value: Apache-Instance-1
+
+  EC2Instance2:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-00e428798e77d38d9
+      InstanceType: t2.micro
+      KeyName: dec2025
+      SecurityGroupIds:
+        - sg-003a206bfde32364f   # dec2025 Security Group ID
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          yum update -y
+          yum install httpd -y
+          systemctl start httpd
+          systemctl enable httpd
+          echo "<h1>Apache Server - Instance 2</h1>" > /var/www/html/index.html
+      Tags:
+        - Key: Name
+          Value: Apache-Instance-2
