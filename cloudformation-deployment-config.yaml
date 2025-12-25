@@ -1,0 +1,5 @@
+version: 1
+deployment:
+  name: gitCF
+  template:
+    file: 2ec2instance_create.yml
